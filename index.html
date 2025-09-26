@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plant Manager v0</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌱 Plant Manager v0</h1>
+      <p>Ajoutez vos plantes d’intérieur et suivez leurs besoins en eau.</p>
+    </header>
+
+    <nav class="tabs" id="main-tabs" style="display:none">
+      <button class="tab-btn" data-tab="add">➕ Ajouter</button>
+      <button class="tab-btn" data-tab="list">🌿 Mes plantes</button>
+      <button class="tab-btn" data-tab="history">🕑 Historique</button>
+      <button class="tab-btn" data-tab="profile">👤 Profil</button>
+    </nav>
+    <div id="user-bar" style="display:none;justify-content:flex-end;align-items:center;gap:10px;margin-bottom:18px;"></div>
+    <main>
+      <!-- Connexion -->
+      <section class="tab-section" id="tab-login" style="display:none">
+        <h2>🔐 Connexion</h2>
+        <form id="loginForm">
+          <input name="email" type="email" placeholder="Email" required>
+          <input name="password" type="password" placeholder="Mot de passe" required>
+          <button type="submit">Se connecter</button>
+        </form>
+        <p>Pas de compte ? <a href="#" id="show-register">Créer un compte</a></p>
+      </section>
+      <!-- Inscription -->
+      <section class="tab-section" id="tab-register" style="display:none">
+        <h2>📝 Inscription</h2>
+        <form id="registerForm">
+          <input name="name" type="text" placeholder="Nom">
+          <input name="email" type="email" placeholder="Email" required>
+          <input name="password" type="password" placeholder="Mot de passe" required>
+          <input name="photo" type="file" accept="image/*">
+          <button type="submit">Créer le compte</button>
+        </form>
+        <p>Déjà inscrit ? <a href="#" id="show-login">Se connecter</a></p>
+      </section>
+      <!-- Profil -->
+      <section class="tab-section" id="tab-profile" style="display:none">
+        <h2>👤 Mon profil</h2>
+        <form id="profileForm">
+          <div id="profile-photo"></div>
+          <input name="name" type="text" placeholder="Nom">
+          <input name="password" type="password" placeholder="Nouveau mot de passe">
+          <input name="photo" type="file" accept="image/*">
+          <button type="submit">Mettre à jour</button>
+        </form>
+        <button id="logoutBtn" style="margin-top:12px">Se déconnecter</button>
+      </section>
+
+      <!-- Formulaire d’ajout -->
+      <section class="add tab-section" id="tab-add">
+        <h2>➕ Ajouter une plante</h2>
+        <form id="plantForm">
+          <div class="form-group">
+            <label for="plant_name">Nom *</label>
+            <input id="plant_name" name="name" type="text" placeholder="Ex: Ficus" required>
+          </div>
+
+          <div class="form-group">
+            <label for="plant_species">Espèce</label>
+            <input id="plant_species" name="species" type="text" placeholder="Ex: Ficus lyrata">
+          </div>
+
+          <div class="form-group">
+            <label for="plant_date">Date d’achat</label>
+            <input id="plant_date" name="purchase_date" type="date">
+          </div>
+
+          <div class="form-group">
+            <label for="plant_water_amount">Quantité d’eau (L)</label>
+            <input id="plant_water_amount" name="water_amount" type="number" step="0.1" placeholder="Ex: 0.5">
+          </div>
+
+          <div class="form-group">
+            <label for="plant_water_interval">Fréquence d’arrosage (jours)</label>
+            <input id="plant_water_interval" name="water_interval_days" type="number" min="1" value="3">
+          </div>
+
+          <div class="form-group">
+            <label for="plant_image">Photo</label>
+            <input id="plant_image" name="image" type="file" accept="image/*">
+          </div>
+
+          <button type="submit">💾 Ajouter la plante</button>
+        </form>
+      </section>
+
+      <!-- Liste des plantes -->
+      <section class="list tab-section" id="tab-list" style="display:none">
+        <h2>🌿 Mes plantes</h2>
+        <div id="plants" class="plant-list">
+          <p><i>Aucune plante pour l’instant...</i></p>
+        </div>
+      </section>
+
+      <!-- Historique d’arrosage -->
+      <section class="history tab-section" id="tab-history" style="display:none">
+        <h2>🕑 Historique d’arrosage</h2>
+        <div id="history-content">
+          <p><i>Sélectionnez une plante pour voir l’historique.</i></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
