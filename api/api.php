@@ -169,4 +169,37 @@ if ($action === "update_profile") {
     jsonResponse(["ok"=>true]);
 }
 
+/**
+ * 6. Modifier une plante
+ */
+if ($action === "update_plant") {
+    $plant_id = $_POST['plant_id'] ?? null;
+    $name = $_POST['name'] ?? null;
+    $species = $_POST['species'] ?? null;
+    $purchase_date = $_POST['purchase_date'] ?? null;
+    $water_amount = $_POST['water_amount'] ?? null;
+    $water_interval_days = $_POST['water_interval_days'] ?? null;
+    $image_path = $_POST['image_path'] ?? null;
+    $user_id = $_SESSION['user_id'];
+    if (!$plant_id) jsonResponse(["error" => "ID plante manquant"]);
+    // Vérifie que la plante appartient à l'utilisateur
+    $stmt = $pdo->prepare("SELECT id FROM plants WHERE id = ? AND user_id = ?");
+    $stmt->execute([$plant_id, $user_id]);
+    if (!$stmt->fetch()) jsonResponse(["error" => "Accès refusé"]);
+    $fields = [];
+    $params = [];
+    if ($name) { $fields[] = 'name=?'; $params[] = $name; }
+    if ($species) { $fields[] = 'species=?'; $params[] = $species; }
+    if ($purchase_date) { $fields[] = 'purchase_date=?'; $params[] = $purchase_date; }
+    if ($water_amount) { $fields[] = 'water_amount=?'; $params[] = $water_amount; }
+    if ($water_interval_days) { $fields[] = 'water_interval_days=?'; $params[] = $water_interval_days; }
+    if ($image_path) { $fields[] = 'image_path=?'; $params[] = $image_path; }
+    if ($fields) {
+        $params[] = $plant_id;
+        $stmt = $pdo->prepare("UPDATE plants SET ".implode(',', $fields)." WHERE id = ?");
+        $stmt->execute($params);
+    }
+    jsonResponse(["ok"=>true]);
+}
+
 jsonResponse(["error" => "Action inconnue"]);
